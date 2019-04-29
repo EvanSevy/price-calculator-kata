@@ -12,14 +12,19 @@ namespace price_calculator_kata_01
             Product book = new Product("Ken Wilber Book", 56789, 12.22m, .22m);
             DisplayProduct(book);
 
+            Product chair = new Product("Aeron Chair", 34567, 1000m, .2m, .15m);
+            DisplayProduct(chair);
+
             Console.ReadLine();
         }
 
         private static void DisplayProduct(Product product)
         {
-            Console.WriteLine($"Product {product.Name}, was purchased for {product.Price.ToTwoDecimals().FormatAsCurrency()}");
-            Console.WriteLine($"A {product.Tax.FormatAsPercentage()} tax, resulted in a tax of {product.CalculateTax().ToTwoDecimals().FormatAsCurrency()}");
-            Console.WriteLine($"For a total with tax of: {product.CalculateTotalWithTax().ToTwoDecimals().FormatAsCurrency()}");
+            Console.WriteLine($"Product {product.Name}, was purchased for {product.Price.DecimalPlaces(2).CurrencyStr()}");
+            Console.WriteLine($"A {product.Tax.ToPercentage().PercentageStr()} tax, resulted in a tax of {product.CalculateTax().DecimalPlaces(2).CurrencyStr()}");
+            Console.WriteLine($"A {product.Discount.ToPercentage().PercentageStr()} discount, resulted in a discount of {product.CalculateDiscount().DecimalPlaces(2).CurrencyStr()}");
+
+            Console.WriteLine($"For a total with tax and discount of: {product.CalculateTotalWithTaxAndDiscount().DecimalPlaces(2).CurrencyStr()}");
         }
     }
 }
