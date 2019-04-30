@@ -8,9 +8,16 @@ namespace price_calculator_kata_01
     class ProductPriceFactory
     {
         ProductPriceHandler ProductPricing = new ProductPriceHandler();
+        public static UPCDiscounts UPCDiscounts { get; set; } = new UPCDiscounts();
+
         private ProductPriceFactory(Product product)
         {
+            SetUPCDiscount(product);
             ProductPricing.Product = product;
+        }
+        public void SetUPCDiscount(Product product)
+        {
+            ProductPricing.DiscountForUPC = UPCDiscounts.FindDiscountRate(product.UPC);
         }
         public static ProductPriceFactory ForProduct(Product product) => new ProductPriceFactory(product);
 
@@ -25,16 +32,6 @@ namespace price_calculator_kata_01
             ProductPricing.Discount = discount;
             return this;
         }
-        public ProductPriceFactory WithUPCDiscountRate(UPCDiscounts discountInfo)
-        {
-            ProductPricing.DiscountForUPC = discountInfo.FindDiscountRate(ProductPricing.Product.UPC);
-            //discountInfo.Where(x => x.UPC.Equals(ProductPricing.Product.UPC)).
-            //ProductPricing.DiscountUPC = ProductPricing.Product.UPC.Equals(discountInfo.UPC) ?
-            //    discountInfo.Discount :
-            //    0.0m;
-            return this;
-        }
-
         public ProductPriceHandler GetFactoryResult()
         {
             return ProductPricing;
