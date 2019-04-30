@@ -6,29 +6,46 @@ namespace price_calculator_kata_01
     {
         static void Main(string[] args)
         {
+
+
             Product buddha = new Product("Buddha Figurine", 12345, 42.25m);
-            DisplayProduct(buddha);
+            //ProductPriceHandler buddhaPrice = ProductPriceFactory.ForProduct(buddha).GetFactoryResult();
+            //buddhaPrice.DisplayProduct();
 
-            Product book = new Product("Ken Wilber Book", 56789, 12.22m, .22m);
-            DisplayProduct(book);
+            //UPCDiscount discount = new UPCDiscount() { Discount = 0.18m, UPC = 123 };
+            ProductsForPricing products = ProductsForPricing.WithDiscountUPC(new UPCDiscount() { Discount = 0.18m, UPC = 12345 });
+            products.Add(ProductPriceFactory.ForProduct(buddha).WithUPCDiscountRate(products.UPCDiscounts).GetFactoryResult());
 
-            Product chair = new Product("Aeron Chair", 34567, 1000m, .2m, .15m);
-            DisplayProduct(chair);
+            Product book = new Product("Ken Wilber Book", 56789, 12.22m);
+            products.Add(ProductPriceFactory.ForProduct(book).WithTaxRate(.22m).GetFactoryResult());
+
+            Product chair = new Product("Aeron Chair", 34567, 1000m);
+            products.Add(ProductPriceFactory.ForProduct(chair).WithTaxRate(.2m).WithDiscountRate(.15m).GetFactoryResult());
+
+            Product shoes = new Product("Salomon Trail Runners", 123, 145m);
+            products.Add(ProductPriceFactory.ForProduct(shoes).WithTaxRate(.07m).WithDiscountRate(.15m).WithUPCDiscountRate(products.UPCDiscounts).GetFactoryResult());
+
+            products.DisplayAllProducts();
+
+
+
+            //Product book = new Product("Ken Wilber Book", 56789, 12.22m);
+            //ProductPriceHandler bookPrice = ProductPriceFactory.ForProduct(book).WithTaxRate(.22m).GetFactoryResult();
+            //bookPrice.DisplayProduct();
+
+            //Product chair = new Product("Aeron Chair", 34567, 1000m);
+            //ProductPriceHandler chairPrice = ProductPriceFactory.ForProduct(chair).WithTaxRate(.2m).WithDiscountRate(.15m).GetFactoryResult();
+            //chairPrice.DisplayProduct();
+
+            //Product shoes = new Product("Salomon Trail Runners", 123, 145m);
+            //ProductPriceHandler shoesPrice = ProductPriceFactory.ForProduct(shoes).WithTaxRate(.07m).WithDiscountRate(.15m).WithUPCDiscountRate(.2m, 123).GetFactoryResult();
+            //shoesPrice.DisplayProduct();
+
+
+
+
 
             Console.ReadLine();
-        }
-
-        private static void DisplayProduct(Product product)
-        {
-            // Product & Price
-            Console.WriteLine($"Product {product.Name}, was purchased for {product.Price.DecimalPlaces(2).CurrencyStr()}");
-            // Tax Report
-            Console.WriteLine($"A {product.Tax.ToPercentage().PercentageStr()} tax, resulted in a tax of {product.CalculateTax().DecimalPlaces(2).CurrencyStr()}");
-            // Discount Report
-            Console.WriteLine($"A {product.Discount.ToPercentage().PercentageStr()} discount, resulted in a discount of {product.CalculateDiscount().DecimalPlaces(2).CurrencyStr()}");
-
-            // Total
-            Console.WriteLine($"For a total with tax and discount of: {product.CalculateTotalWithTaxAndDiscount().DecimalPlaces(2).CurrencyStr()}");
         }
     }
 }
