@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using price_calculator_kata_01.interfaces;
 
 namespace price_calculator_kata_01
 {
     class ProductPriceFactory
     {
-        ProductPriceHandler ProductPricing = new ProductPriceHandler();
+        IProductPriceHandler ProductPricing;
         public static UPCDiscounts UPCDiscounts { get; set; } = new UPCDiscounts();
 
         private ProductPriceFactory(Product product)
         {
+            ProductPricing = ProductPriceHandler.ForPriceResult(product);
             SetUPCDiscount(product);
             ProductPricing.Product = product;
         }
-        public void SetUPCDiscount(Product product)
+        private void SetUPCDiscount(Product product)
         {
             ProductPricing.DiscountForUPC = UPCDiscounts.FindDiscountRate(product.UPC);
         }
@@ -32,9 +34,9 @@ namespace price_calculator_kata_01
             ProductPricing.Discount = discount;
             return this;
         }
-        public ProductPriceHandler GetFactoryResult()
+        public IProductPriceHandler GetFactoryResult()
         {
-            return ProductPricing;
+            return (IProductPriceHandler)ProductPricing;
         }
     }
 }

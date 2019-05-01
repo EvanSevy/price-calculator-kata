@@ -1,23 +1,35 @@
-﻿using System;
+﻿using price_calculator_kata_01.interfaces;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 namespace price_calculator_kata_01
 {
-    class ProductsForPricing
+    class ProductsForPricing : IEnumerable<IProductPriceHandler>
     {
-        public List<ProductPriceHandler> Products { get; set; } = new List<ProductPriceHandler>();
-        public void Add(ProductPriceHandler product)
+        public List<IProductPriceHandler> Products { get; set; } = new List<IProductPriceHandler>();
+        public void Add(IProductPriceHandler product)
         {
             Products.Add(product);
         }
 
-        public void DisplayAllProducts()
+        //public void DisplayAllProducts()
+        //{
+        //    foreach(IProductPriceHandler product in Products)
+        //    {
+        //        product.DisplayProduct();
+        //    }
+        //}
+
+        public IEnumerator<IProductPriceHandler> GetEnumerator()
         {
-            foreach(ProductPriceHandler product in Products)
-            {
-                product.DisplayProduct();
-            }
+            return ((IEnumerable<IProductPriceHandler>)Products).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<IProductPriceHandler>)Products).GetEnumerator();
         }
     }
 }
