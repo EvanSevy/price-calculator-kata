@@ -19,7 +19,7 @@ namespace price_calculator_kata_01
         }
         private void SetUPCDiscount(Product product)
         {
-            ProductPricing.DiscountForUPC = UPCDiscounts.FindDiscountRate(product.UPC);
+            ProductPricing.DiscountForUpc = UPCDiscounts.FindDiscountRate(product.UPC);
         }
         public static ProductPriceFactory ForProduct(Product product) => new ProductPriceFactory(product);
 

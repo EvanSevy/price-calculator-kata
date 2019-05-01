@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace price_calculator_kata_01.interfaces
-{
-    interface ITaxOrDiscount
-    {
-        IDiscount PerformTax();
+//namespace price_calculator_kata_01.interfaces
+//{
+//    interface ITaxOrDiscount
+//    {
+//        IDiscount PerformTax();
 
-        ITax PerformDiscount();
+//        ITax PerformDiscount();
 
-        decimal GetResult();
-    }
-}
+//        decimal GetResult();
+//    }
+//}

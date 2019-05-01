@@ -5,36 +5,38 @@ using System.Text;
 
 namespace price_calculator_kata_01
 {
-    class ProductPriceHandler : IProductPriceHandler, ITaxOrDiscount, ITax, IDiscount
+    class ProductPriceHandler : IProductPriceHandler, ITaxOrDiscountOrUpcDiscount, ITaxOrDiscount, ITaxOrUpcDiscount, IDiscountOrUpcDiscount
     {
         public Product Product { get; set; }
         public decimal Tax { get; set; } = 0.2m;
         public decimal TaxResult { get; set; } = 0.0m;
         public decimal Discount { get; set; } = 0.0m;
         public decimal DiscountResult { get; set; } = 0.0m;
-        public decimal DiscountForUPC { get; set; } = 0.0m;
-        public decimal DiscountForUPCResult { get; set; } = 0.0m;
+        public decimal DiscountForUpc { get; set; } = 0.0m;
+        public decimal DiscountForUpcResult { get; set; } = 0.0m;
+        public decimal Total { get; set; } = 0.0m;
 
 
         public decimal RunningTotal { get; set; }
         private ProductPriceHandler(Product product)
         {
             Product = product;
-            RunningTotal = Product.Price;
+            //RunningTotal = Product.Price;
         }
 
         public static IProductPriceHandler ForPriceResult(Product product) => (IProductPriceHandler)new ProductPriceHandler(product);
 
 
-        public IDiscount PerformTax()
+        //public IDiscount PerformTax()
+        //{
+        //    RunningTotal = RunningTotal + (RunningTotal * Tax);
+        //    return this;
+        //    //return Product.Price * Tax;
+        //}
+        public IDiscountOrUpcDiscount CalculateTax()
         {
-            RunningTotal = RunningTotal + (RunningTotal * Tax);
+            TaxResult = (Product.Price - (DiscountResult + DiscountForUpcResult)) * Tax;
             return this;
-            //return Product.Price * Tax;
-        }
-        public decimal CalculateTax()
-        {
-            TaxResult = (Product.Price - (DiscountResult + DiscountForUPCResult)) * Tax;
             //if(DiscountResult == 0.0m && DiscountForUPCResult == 0.0m)
             //{
             //    TaxResult = Product.Price * Tax;
@@ -42,30 +44,32 @@ namespace price_calculator_kata_01
             //{
             //    TaxResult = (Product.Price - (DiscountResult + DiscountForUPCResult)) * Tax;
             //}
-            return Product.Price * Tax;
+            //return Product.Price * Tax;
         }
         //public decimal CalculateTotalWithTax()
         //{
         //    return Product.Price + CalculateTax();
         //}
 
-        public ITax PerformDiscount()
+        //public ITax PerformDiscount()
+        //{
+        //    RunningTotal = RunningTotal - (RunningTotal * Discount);
+        //    RunningTotal = RunningTotal - (RunningTotal * DiscountForUPC);
+        //    return this;
+        //    //return Product.Price * Discount;
+        //}
+        public ITaxOrUpcDiscount CalculateDiscount()
         {
-            RunningTotal = RunningTotal - (RunningTotal * Discount);
-            RunningTotal = RunningTotal - (RunningTotal * DiscountForUPC);
+            DiscountResult = Product.Price * Discount;
             return this;
             //return Product.Price * Discount;
         }
-        public decimal CalculateDiscount()
-        {
-            DiscountResult = Product.Price * Discount;
-            return Product.Price * Discount;
-        }
 
-        public decimal CalculateUPCDiscount()
+        public ITaxOrDiscount CalculateUpcDiscount()
         {
-            DiscountForUPCResult = Product.Price * DiscountForUPCResult;
-            return Product.Price * DiscountForUPC;
+            DiscountForUpcResult = Product.Price * DiscountForUpc;
+            return this;
+            //return Product.Price * DiscountForUPC;
         }
 
         //public decimal CalculateTotalWithTaxAndDiscount()
@@ -78,9 +82,11 @@ namespace price_calculator_kata_01
         //    return CalculateTotalWithTax() - CalculateDiscount() - CalculateUPCDiscount();
         //}
 
-        public decimal GetResult()
+        public IProductPriceHandler GetResult()
         {
-            return RunningTotal;
+            Total = Product.Price + TaxResult - DiscountResult - DiscountForUpcResult;
+            return this;
+            //return RunningTotal;
         }
 
         //##########################################
