@@ -14,13 +14,13 @@ namespace price_calculator_kata_01
             Products.Add(product);
         }
 
-        //public void DisplayAllProducts()
-        //{
-        //    foreach(IProductPriceHandler product in Products)
-        //    {
-        //        product.DisplayProduct();
-        //    }
-        //}
+        public void DisplayAllProducts()
+        {
+            foreach (ProductPriceHandler product in Products)
+            {
+                product.DisplayProduct();
+            }
+        }
 
         public IEnumerator<IProductPriceHandler> GetEnumerator()
         {

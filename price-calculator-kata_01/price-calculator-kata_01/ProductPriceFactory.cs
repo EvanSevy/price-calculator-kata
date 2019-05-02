@@ -14,10 +14,10 @@ namespace price_calculator_kata_01
         private ProductPriceFactory(Product product)
         {
             ProductPricing = ProductPriceHandler.ForPriceResult(product);
-            SetUPCDiscount(product);
+            SetUpcDiscount(product);
             ProductPricing.Product = product;
         }
-        private void SetUPCDiscount(Product product)
+        private void SetUpcDiscount(Product product)
         {
             ProductPricing.DiscountForUpc = UPCDiscounts.FindDiscountRate(product.UPC);
         }
