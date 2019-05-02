@@ -15,7 +15,7 @@ namespace price_calculator_kata_01
         public decimal DiscountForUpc { get; set; } = 0.0m;
         public decimal DiscountForUpcResult { get; set; } = 0.0m;
         public decimal Total { get; set; } = 0.0m;
-
+        public AddedExpenses AddedExpenses { get; set; } = new AddedExpenses();
 
         public decimal RunningTotal { get; set; }
         private ProductPriceHandler(Product product)
@@ -42,9 +42,14 @@ namespace price_calculator_kata_01
             return this;
         }
 
+        public void AddExpense(AddedExpense expense)
+        {
+            AddedExpenses.Add(expense);
+        }
+
         public IProductPriceHandler GetResult()
         {
-            Total = Product.Price + TaxResult - DiscountResult - DiscountForUpcResult;
+            Total = Product.Price + TaxResult - DiscountResult - DiscountForUpcResult + AddedExpenses.CalculateExpenses(Product);
             return this;
         }
 
@@ -59,6 +64,8 @@ namespace price_calculator_kata_01
             Console.WriteLine($"A {result.Discount.ToPercentage().PercentageStr()} discount, resulted in a discount of {result.DiscountResult.DecimalPlaces(2).CurrencyStr()}");
             // Discount UPC Report
             Console.WriteLine($"A {result.DiscountForUpc.ToPercentage().PercentageStr()} discount for UPC {result.Product.UPC}, resulted in a discount of {result.DiscountForUpcResult.DecimalPlaces(2).CurrencyStr()}");
+
+            AddedExpenses.DisplayAllAddedExpenses();
 
             // Total
             Console.WriteLine($"For a total with tax and discount and UPC-Discount of: {result.Total.DecimalPlaces(2).CurrencyStr()}");

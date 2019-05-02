@@ -15,12 +15,15 @@ namespace price_calculator_kata_01.interfaces
         decimal DiscountForUpc { get; set; }
         decimal DiscountForUpcResult { get; set; }
         decimal Total { get; set; }
+        AddedExpenses AddedExpenses { get; set; }
+        void AddExpense(AddedExpense expense);
     }
     interface ITaxOrDiscountOrUpcDiscount
     {
         IDiscountOrUpcDiscount CalculateTax();
         ITaxOrUpcDiscount CalculateDiscount();
         ITaxOrDiscount CalculateUpcDiscount();
+
         IProductPriceHandler GetResult();
     }
     interface ITaxOrDiscount
