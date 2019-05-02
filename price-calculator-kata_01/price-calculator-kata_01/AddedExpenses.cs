@@ -2,48 +2,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace price_calculator_kata_01
 {
-    class AddedExpenses : IEnumerable<AddedExpense>
+    class AddedExpenses : IEnumerable<AddedExpenseResult>
     {
-        public List<AddedExpense> Expenses { get; set; } = new List<AddedExpense>();
+        public List<AddedExpenseResult> Expenses { get; set; } = new List<AddedExpenseResult>();
+        public decimal TotalOfExpenses { get; set; } = 0.0m;
 
-        public void Add(AddedExpense expense)
+        public void Add(AddedExpenseResult expense)
         {
             Expenses.Add(expense);
         }
-        public decimal CalculateExpenses(Product forProduct)
+        public void CalculateExpenses()
         {
-            decimal Total = 0.0m;
-            foreach(AddedExpense expense in Expenses)
-            {
-                if(expense.Type == ExpenseType.Monetary)
-                {
-                    Total += (expense.Value);
-                } else if (expense.Type == ExpenseType.Percentage)
-                {
-                    Total += (expense.Value * forProduct.Price);
-                }
-            }
-            return Total;
+            TotalOfExpenses = Expenses.Sum(e => e.Result);
         }
         public void DisplayAllAddedExpenses()
         {
-            foreach(AddedExpense expense in Expenses)
+            foreach(AddedExpenseResult expense in Expenses)
             {
                 expense.DisplayAddedExpense();
             }
         }
 
-        public IEnumerator<AddedExpense> GetEnumerator()
+        public IEnumerator<AddedExpenseResult> GetEnumerator()
         {
-            return ((IEnumerable<AddedExpense>)Expenses).GetEnumerator();
+            return ((IEnumerable<AddedExpenseResult>)Expenses).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<AddedExpense>)Expenses).GetEnumerator();
+            return ((IEnumerable<AddedExpenseResult>)Expenses).GetEnumerator();
         }
     }
 }

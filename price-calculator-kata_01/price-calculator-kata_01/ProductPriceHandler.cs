@@ -42,20 +42,18 @@ namespace price_calculator_kata_01
             return this;
         }
 
-        public void AddExpense(AddedExpense expense)
-        {
-            AddedExpenses.Add(expense);
-        }
-
         public IProductPriceHandler GetResult()
         {
-            Total = Product.Price + TaxResult - DiscountResult - DiscountForUpcResult + AddedExpenses.CalculateExpenses(Product);
+            AddedExpenses.CalculateExpenses();
+            CalculateUpcDiscount();
+            Total = Product.Price + TaxResult - DiscountResult - DiscountForUpcResult + AddedExpenses.TotalOfExpenses;
             return this;
         }
 
         public void DisplayProduct()
         {
-            var result = CalculateTax().CalculateDiscount().CalculateUpcDiscount().GetResult();
+            var result = CalculateTax().CalculateDiscount().GetResult();
+            //var result = CalculateTax().CalculateDiscount().CalculateUpcDiscount().GetResult();
             // Product & Price
             Console.WriteLine($"Product {result.Product.Name}, was purchased for {result.Product.Price.DecimalPlaces(2).CurrencyStr()}");
             // Tax Report
@@ -67,9 +65,10 @@ namespace price_calculator_kata_01
 
             AddedExpenses.DisplayAllAddedExpenses();
 
+            Console.WriteLine($"The total for all 'Added Expenses' is {AddedExpenses.TotalOfExpenses.DecimalPlaces(2).CurrencyStr()}");
+
             // Total
             Console.WriteLine($"For a total with tax and discount and UPC-Discount of: {result.Total.DecimalPlaces(2).CurrencyStr()}");
-            //Console.WriteLine($"For a total with tax and discount and UPC-Discount of: {CalculateTotalWithTaxDiscountAndUPCDiscount().DecimalPlaces(2).CurrencyStr()}");
             Console.WriteLine();
         }
     }

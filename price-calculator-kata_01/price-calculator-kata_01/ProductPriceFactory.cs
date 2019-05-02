@@ -36,8 +36,8 @@ namespace price_calculator_kata_01
         }
         public ProductPriceFactory WithAddedExpense(AddedExpense expense)
         {
-            expense.CalculateExpenseResult(ProductPricing.Product);
-            ProductPricing.AddedExpenses.Add(expense);
+            expense.ForProduct = ProductPricing.Product;
+            ProductPricing.AddedExpenses.Add(new AddedExpenseResult(expense));
             return this;
         }
         public IProductPriceHandler GetFactoryResult()
