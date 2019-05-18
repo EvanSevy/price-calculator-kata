@@ -24,23 +24,24 @@ namespace price_calculator_kata_01.interfaces
     }
     interface IDiscountOrUpcDiscount
     {
-        IUpcDiscount CalculateDiscount();
-        IDiscount CalculateUpcDiscount();
+        IDiscount CalculateDiscount();
+        IResult CalculateUpcDiscount();
         IProductPriceHandler GetResult();
     }
+    // ############
+    // Perhaps just force the order of fluent syntax, from Tax to UpcDiscount to Discount (and allow multiple discounts)
+    // ############
     interface IDiscount : IResult
     {
-        IUpcDiscount CalculateDiscount();
+        IDiscount CalculateDiscount();
+        IResult CalculateUpcDiscount();
+        IProductPriceHandler GetResult();
     }
     interface IUpcDiscount : IResult
     {
-        IResult CalculateUpcDiscount();
+        IProductPriceHandler GetResult();
     }
-    //interface IThenDiscount : IResult
-    //{
-    //    IResult CalculateDiscount();
-    //}
-    //interface IThenUpcDiscount : IResult
+    //interface IResult : IResult
     //{
     //    IResult CalculateUpcDiscount();
     //}
