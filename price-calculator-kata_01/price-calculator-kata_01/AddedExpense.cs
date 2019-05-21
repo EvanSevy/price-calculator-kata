@@ -4,7 +4,7 @@ using System.Text;
 
 namespace price_calculator_kata_01
 {
-    class AddedExpense
+    public class AddedExpense
     {
         public string Name { get; set; }
         public Product ForProduct { get; set; }
@@ -12,5 +12,5 @@ namespace price_calculator_kata_01
         public decimal Value { get; set; }
     }
 
-    enum ExpenseType { Percentage, Monetary };
+    public enum ExpenseType { Percentage, Monetary };
 }

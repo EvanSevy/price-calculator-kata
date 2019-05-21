@@ -4,7 +4,7 @@ using System.Text;
 
 namespace price_calculator_kata_01
 {
-    class AddedExpenseResult
+    public class AddedExpenseResult
     {
         public AddedExpense AddedExpense { get; set; }
         public decimal Result { get; set; }
@@ -12,9 +12,12 @@ namespace price_calculator_kata_01
         public AddedExpenseResult(AddedExpense addedExpense)
         {
             AddedExpense = addedExpense;
-
+            SetResult();
+        }
+        public void SetResult()
+        {
             if (AddedExpense.Type == ExpenseType.Percentage)
-                Result = AddedExpense.Value * AddedExpense.ForProduct.Price;
+                Result = (AddedExpense.Value / 100) * AddedExpense.ForProduct.Price;
             else if (AddedExpense.Type == ExpenseType.Monetary)
             {
                 Result = AddedExpense.Value;

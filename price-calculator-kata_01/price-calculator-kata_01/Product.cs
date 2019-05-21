@@ -4,7 +4,7 @@ using System.Text;
 
 namespace price_calculator_kata_01
 {
-    class Product
+    public class Product
     {
         public string Name { get; set; }
         public int UPC { get; set; }
