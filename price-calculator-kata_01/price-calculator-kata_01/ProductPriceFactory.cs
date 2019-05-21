@@ -6,7 +6,7 @@ using price_calculator_kata_01.interfaces;
 
 namespace price_calculator_kata_01
 {
-    class ProductPriceFactory
+    public class ProductPriceFactory
     {
         IProductPriceHandler ProductPricing;
         public static UPCDiscounts UPCDiscounts { get; set; } = new UPCDiscounts();
@@ -14,12 +14,6 @@ namespace price_calculator_kata_01
         private ProductPriceFactory(Product product)
         {
             ProductPricing = ProductPriceHandler.ForPriceResult(product);
-            SetUpcDiscount(product);
-            ProductPricing.Product = product;
-        }
-        private void SetUpcDiscount(Product product)
-        {
-            ProductPricing.DiscountForUpc = UPCDiscounts.FindDiscountRate(product.UPC);
         }
         public static ProductPriceFactory ForProduct(Product product) => new ProductPriceFactory(product);
 

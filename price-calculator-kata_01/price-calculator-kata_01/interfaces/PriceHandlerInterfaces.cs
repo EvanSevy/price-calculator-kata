@@ -5,7 +5,7 @@ using System.Text;
 namespace price_calculator_kata_01.interfaces
 {
 
-    interface IProductPriceHandler : ITax, IDiscountOrUpcDiscount, IDiscount, IUpcDiscount
+    public interface IProductPriceHandler : ITax, IDiscountOrUpcDiscount, IDiscount, IUpcDiscount
     {
         Product Product { get; set; }
         decimal Tax { get; set; }
@@ -17,35 +17,35 @@ namespace price_calculator_kata_01.interfaces
         decimal Total { get; set; }
         AddedExpenses AddedExpenses { get; set; }
     }
-    interface ITax
+    public interface ITax
     {
         IDiscountOrUpcDiscount CalculateTax();
         IProductPriceHandler GetResult();
     }
-    interface IDiscountOrUpcDiscount
+	public interface IDiscountOrUpcDiscount
     {
         IDiscount CalculateDiscount();
         IResult CalculateUpcDiscount();
         IProductPriceHandler GetResult();
     }
-    // ############
-    // Perhaps just force the order of fluent syntax, from Tax to UpcDiscount to Discount (and allow multiple discounts)
-    // ############
-    interface IDiscount : IResult
+	// ############
+	// Perhaps just force the order of fluent syntax, from Tax to UpcDiscount to Discount (and allow multiple discounts)
+	// ############
+	public interface IDiscount : IResult
     {
         IDiscount CalculateDiscount();
         IResult CalculateUpcDiscount();
         IProductPriceHandler GetResult();
     }
-    interface IUpcDiscount : IResult
+	public interface IUpcDiscount : IResult
     {
         IProductPriceHandler GetResult();
     }
-    //interface IResult : IResult
-    //{
-    //    IResult CalculateUpcDiscount();
-    //}
-    interface IResult
+	//interface IResult : IResult
+	//{
+	//    IResult CalculateUpcDiscount();
+	//}
+	public interface IResult
     {
         IProductPriceHandler GetResult();
     }

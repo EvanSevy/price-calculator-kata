@@ -10,18 +10,18 @@ namespace price_calculator_kata_01
         {
             return System.Math.Round(number, decimalPlaces);
         }
-        public static decimal ToPercentage(this decimal number, int decimalPlaces = 1)
-        {
-            return (number * 100.0m).DecimalPlaces(decimalPlaces);
-        }
+        //public static decimal ToPercentage(this decimal number, int decimalPlaces = 1)
+        //{
+        //    return (number * 100.0m).DecimalPlaces(decimalPlaces);
+        //}
 
         public static string CurrencyStr(this decimal number)
         {
-            return $"${number}";
+            return $"${number:0.00}";
         }
         public static string PercentageStr(this decimal number)
         {
-            return $"{number}%";
+            return $"{number:0.00}%";
         }
     }
 }

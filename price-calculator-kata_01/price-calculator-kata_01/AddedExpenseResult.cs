@@ -25,7 +25,7 @@ namespace price_calculator_kata_01
         }
         public void DisplayAddedExpense()
         {
-            String ValueStr = (AddedExpense.Type == ExpenseType.Monetary) ? AddedExpense.Value.DecimalPlaces(2).CurrencyStr() : AddedExpense.Value.ToPercentage().DecimalPlaces(2).PercentageStr();
+            String ValueStr = (AddedExpense.Type == ExpenseType.Monetary) ? AddedExpense.Value.DecimalPlaces(2).CurrencyStr() : AddedExpense.Value.DecimalPlaces(2).PercentageStr();
             Console.WriteLine($"Added expense of {AddedExpense.Name}, for {ValueStr}, resulted in a cost of {Result.DecimalPlaces(2).CurrencyStr()}");
         }
     }

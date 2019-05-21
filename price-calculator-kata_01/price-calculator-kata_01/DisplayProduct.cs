@@ -18,13 +18,13 @@ namespace price_calculator_kata_01
             var result = Product.CalculateTax().CalculateDiscount().GetResult();
             //var result = CalculateTax().CalculateDiscount().CalculateUpcDiscount().GetResult();
             // Product & Price
-            Console.WriteLine($"Product {result.Product.Name}, was purchased for {result.Product.Price.DecimalPlaces(2).CurrencyStr()}");
+            Console.WriteLine($"Product {result.Product.Name}, was purchased for {result.Product.Price.CurrencyStr()}");
             // Tax Report
-            Console.WriteLine($"A {result.Tax.ToPercentage().PercentageStr()} tax, resulted in a tax of {result.TaxResult.DecimalPlaces(2).CurrencyStr()}");
+            Console.WriteLine($"A {result.Tax.PercentageStr()} tax, resulted in a tax of {result.TaxResult.CurrencyStr()}");
             // Discount Report
-            Console.WriteLine($"A {result.Discount.ToPercentage().PercentageStr()} discount, resulted in a discount of {result.DiscountResult.DecimalPlaces(2).CurrencyStr()}");
+            Console.WriteLine($"A {result.Discount.PercentageStr()} discount, resulted in a discount of {result.DiscountResult.CurrencyStr()}");
             // Discount UPC Report
-            Console.WriteLine($"A {result.DiscountForUpc.ToPercentage().PercentageStr()} discount for UPC {result.Product.UPC}, resulted in a discount of {result.DiscountForUpcResult.DecimalPlaces(2).CurrencyStr()}");
+            Console.WriteLine($"A {result.DiscountForUpc.PercentageStr()} discount for UPC {result.Product.UPC}, resulted in a discount of {result.DiscountForUpcResult.CurrencyStr()}");
 
             result.AddedExpenses.DisplayAllAddedExpenses();
 

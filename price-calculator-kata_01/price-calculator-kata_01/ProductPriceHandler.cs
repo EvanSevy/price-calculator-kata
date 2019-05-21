@@ -8,7 +8,7 @@ namespace price_calculator_kata_01
     class ProductPriceHandler : IProductPriceHandler, ITax, IDiscountOrUpcDiscount, IDiscount, IUpcDiscount, IResult
     {
         public Product Product { get; set; }
-        public decimal Tax { get; set; } = 0.2m;
+        public decimal Tax { get; set; } = 2.0m;
         public decimal TaxResult { get; set; } = 0.0m;
         public decimal Discount { get; set; } = 0.0m;
         public decimal DiscountResult { get; set; } = 0.0m;
@@ -21,20 +21,19 @@ namespace price_calculator_kata_01
         private ProductPriceHandler(Product product)
         {
             Product = product;
-        }
-
-        public static IProductPriceHandler ForPriceResult(Product product) => 
+		}
+		public static IProductPriceHandler ForPriceResult(Product product) => 
             (IProductPriceHandler)new ProductPriceHandler(product);
 
         public IDiscountOrUpcDiscount CalculateTax()
         {
-            TaxResult = Product.Price * Tax;
+            TaxResult = Product.Price * (Tax / 100);
             //TaxResult = (Product.Price - (DiscountResult + DiscountForUpcResult)) * Tax;
             return this;
         }
         public IDiscount CalculateDiscount()
         {
-            DiscountResult = (Product.Price - DiscountForUpcResult) * Discount;
+            DiscountResult = (Product.Price - DiscountForUpcResult) * (Discount / 100);
             if (DiscountForUpcResult == 0.0m)
             {
                 return this;
@@ -53,11 +52,16 @@ namespace price_calculator_kata_01
 
         public IResult CalculateUpcDiscount()
         {
-            DiscountForUpcResult = (Product.Price - DiscountResult) * DiscountForUpc;
+			FindUpcDiscount();
+            DiscountForUpcResult = (Product.Price - DiscountResult) * (DiscountForUpc / 100);
             return this;
         }
+		private void FindUpcDiscount()
+		{
+			DiscountForUpc = ProductPriceFactory.UPCDiscounts.FindDiscountRate(Product.UPC);
+		}
 
-        public IProductPriceHandler GetResult()
+		public IProductPriceHandler GetResult()
         {
             AddedExpenses.CalculateExpenses();
             CalculateUpcDiscount();

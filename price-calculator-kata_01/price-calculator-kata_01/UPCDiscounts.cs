@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace price_calculator_kata_01
 {
-    class UPCDiscounts
+    public class UPCDiscounts
     {
         public List<UPCDiscount> Discounts { get; set; } = new List<UPCDiscount>();
 

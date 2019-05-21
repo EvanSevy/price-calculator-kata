@@ -31,5 +31,20 @@ namespace price_calculator_kata_01.tests
             // Assert
             sut.Result.Should().Be(expectedResult);
         }
+
+		//[Test]
+		//public void ProductPriceFactoryReturnsValidResult()
+		//{
+		//	// Arrange
+		//	var fixture = new Fixture();
+		//	Product product = new Product("ProductName", 12345, 155.55m);
+		//	AddedExpense expense = new AddedExpense();
+		//	expense.
+		//	ProductPriceFactory sut = ProductPriceFactory.ForProduct(product).WithTaxRate(7).WithDiscountRate(10).WithAddedExpense()
+
+		//	// Act
+
+		//	// Assert
+		//}
     }
 }
