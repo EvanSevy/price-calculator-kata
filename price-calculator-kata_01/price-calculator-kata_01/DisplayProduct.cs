@@ -26,9 +26,9 @@ namespace price_calculator_kata_01
             // Discount UPC Report
             Console.WriteLine($"A {result.DiscountForUpc.PercentageStr()} discount for UPC {result.Product.UPC}, resulted in a discount of {result.DiscountForUpcResult.CurrencyStr()}");
 
-            result.AddedExpenses.DisplayAllAddedExpenses();
+            result.AddedExpensesResults.DisplayAllAddedExpenses();
 
-            Console.WriteLine($"The total for all 'Added Expenses' is {result.AddedExpenses.TotalOfExpenses.DecimalPlaces(2).CurrencyStr()}");
+            Console.WriteLine($"The total for all 'Added Expenses' is {result.AddedExpensesResults.TotalOfExpenses.DecimalPlaces(2).CurrencyStr()}");
 
             // Total
             Console.WriteLine($"For a total with tax and discount and UPC-Discount of: {result.Total.DecimalPlaces(2).CurrencyStr()}");

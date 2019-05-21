@@ -5,7 +5,7 @@ using System.Text;
 
 namespace price_calculator_kata_01
 {
-    class ProductPriceHandler : IProductPriceHandler, ITax, IDiscountOrUpcDiscount, IDiscount, IUpcDiscount, IResult
+    public class ProductPriceHandler : IProductPriceHandler, ITax, IDiscountOrUpcDiscount, IDiscount, IUpcDiscount, IResult
     {
         public Product Product { get; set; }
         public decimal Tax { get; set; } = 2.0m;
@@ -15,7 +15,7 @@ namespace price_calculator_kata_01
         public decimal DiscountForUpc { get; set; } = 0.0m;
         public decimal DiscountForUpcResult { get; set; } = 0.0m;
         public decimal Total { get; set; } = 0.0m;
-        public AddedExpenses AddedExpenses { get; set; } = new AddedExpenses();
+        public AddedExpensesResults AddedExpensesResults { get; set; } = new AddedExpensesResults();
 
         public decimal RunningTotal { get; set; }
         private ProductPriceHandler(Product product)
@@ -63,9 +63,9 @@ namespace price_calculator_kata_01
 
 		public IProductPriceHandler GetResult()
         {
-            AddedExpenses.CalculateExpenses();
+            AddedExpensesResults.CalculateExpenses();
             CalculateUpcDiscount();
-            Total = Product.Price + TaxResult - DiscountResult - DiscountForUpcResult + AddedExpenses.TotalOfExpenses;
+            Total = Product.Price + TaxResult - DiscountResult - DiscountForUpcResult + AddedExpensesResults.TotalOfExpenses;
             return this;
         }
 

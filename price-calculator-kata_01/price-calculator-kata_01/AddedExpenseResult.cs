@@ -7,17 +7,19 @@ namespace price_calculator_kata_01
     public class AddedExpenseResult
     {
         public AddedExpense AddedExpense { get; set; }
-        public decimal Result { get; set; }
+		public Product ForProduct { get; set; }
+		public decimal Result { get; set; }
 
-        public AddedExpenseResult(AddedExpense addedExpense)
+        public AddedExpenseResult(AddedExpense addedExpense, Product forProduct)
         {
             AddedExpense = addedExpense;
+			ForProduct = forProduct;
             SetResult();
         }
-        public void SetResult()
+        private void SetResult()
         {
             if (AddedExpense.Type == ExpenseType.Percentage)
-                Result = (AddedExpense.Value / 100) * AddedExpense.ForProduct.Price;
+                Result = (AddedExpense.Value / 100) * ForProduct.Price;
             else if (AddedExpense.Type == ExpenseType.Monetary)
             {
                 Result = AddedExpense.Value;

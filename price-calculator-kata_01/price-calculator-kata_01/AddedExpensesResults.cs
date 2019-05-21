@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace price_calculator_kata_01
 {
-	public class AddedExpenses : IEnumerable<AddedExpenseResult>
+	public class AddedExpensesResults : IEnumerable<AddedExpenseResult>
     {
         public List<AddedExpenseResult> Expenses { get; set; } = new List<AddedExpenseResult>();
         public decimal TotalOfExpenses { get; set; } = 0.0m;

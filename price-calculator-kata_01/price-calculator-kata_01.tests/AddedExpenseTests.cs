@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using NUnit.Framework;
+using price_calculator_kata_01.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Text;
 namespace price_calculator_kata_01.tests
 {
     [TestFixture]
-    class TestingTest
+    class AddedExpenseTests
     {
         [Test]
         [TestCase(125.0, 5.0, ExpenseType.Monetary, 5.0)]
@@ -19,32 +20,18 @@ namespace price_calculator_kata_01.tests
             var fixture = new Fixture();
 
             var addedExpense = fixture.Create<AddedExpense>();
-            addedExpense.ForProduct.Price = productPrice;
             addedExpense.Value = expenseValue;
             addedExpense.Type = expenseType;
+			Product product = fixture.Create<Product>();
+			product.Price = productPrice;
 
-            var sut = new AddedExpenseResult(addedExpense);
+            var sut = new AddedExpenseResult(addedExpense, product);
 
             // Act
-            sut.SetResult();
+            //sut.SetResult();
 
             // Assert
             sut.Result.Should().Be(expectedResult);
         }
-
-		//[Test]
-		//public void ProductPriceFactoryReturnsValidResult()
-		//{
-		//	// Arrange
-		//	var fixture = new Fixture();
-		//	Product product = new Product("ProductName", 12345, 155.55m);
-		//	AddedExpense expense = new AddedExpense();
-		//	expense.
-		//	ProductPriceFactory sut = ProductPriceFactory.ForProduct(product).WithTaxRate(7).WithDiscountRate(10).WithAddedExpense()
-
-		//	// Act
-
-		//	// Assert
-		//}
-    }
+	}
 }
