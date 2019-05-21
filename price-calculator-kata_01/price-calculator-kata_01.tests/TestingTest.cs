@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,52 +11,25 @@ namespace price_calculator_kata_01.tests
     class TestingTest
     {
         [Test]
-        public void AddedExpenseMonetaryShouldBeValueResult()
+        [TestCase(125.0, 5.0, ExpenseType.Monetary, 5.0)]
+        [TestCase(125.0, 5.0, ExpenseType.Percentage, 6.25)]
+        public void AddedExpenseShouldSetResult(decimal productPrice, decimal expenseValue, ExpenseType expenseType, decimal expectedResult)
         {
             // Arrange
             var fixture = new Fixture();
 
-            var product = fixture.Create<Product>();
-            product.Price = 125.0m;
+            var addedExpense = fixture.Create<AddedExpense>();
+            addedExpense.ForProduct.Price = productPrice;
+            addedExpense.Value = expenseValue;
+            addedExpense.Type = expenseType;
 
-            var addedExpense = new AddedExpense {
-                Name = "SomeExpense",
-                ForProduct = product,
-                Type = ExpenseType.Monetary,
-                Value = 5.0m
-            };
             var sut = new AddedExpenseResult(addedExpense);
 
             // Act
             sut.SetResult();
 
             // Assert
-            Assert.That(sut.Result, Is.EqualTo(5.0m));
-        }
-
-        [Test]
-        public void AddedExpensePercentageShouldBePercentageResult()
-        {
-            // Arrange
-            var fixture = new Fixture();
-
-            var product = fixture.Create<Product>();
-            product.Price = 125.0m;
-
-            var addedExpense = new AddedExpense
-            {
-                Name = "SomeExpense",
-                ForProduct = product,
-                Type = ExpenseType.Percentage,
-                Value = 5.0m
-            };
-            var sut = new AddedExpenseResult(addedExpense);
-
-            // Act
-            sut.SetResult();
-
-            // Assert
-            Assert.That(sut.Result, Is.EqualTo(6.25m));
+            sut.Result.Should().Be(expectedResult);
         }
     }
 }
