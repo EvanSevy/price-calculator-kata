@@ -10,7 +10,17 @@ namespace price_calculator_kata_01
     {
         public List<AddedExpenseResult> Expenses { get; set; } = new List<AddedExpenseResult>();
         public decimal TotalOfExpenses { get; set; } = 0.0m;
+		public AddedExpensesResults()
+		{
 
+		}
+		public AddedExpensesResults(AddedExpenses expenses, Product forProduct)
+		{
+			foreach (AddedExpense expense in expenses)
+			{
+				Expenses.Add(new AddedExpenseResult(expense, forProduct));
+			}
+		}
         public void Add(AddedExpenseResult expense)
         {
             Expenses.Add(expense);

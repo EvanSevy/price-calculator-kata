@@ -18,9 +18,8 @@ namespace price_calculator_kata_01
         {
             foreach (ProductPriceHandler product in Products)
             {
-                DisplayProduct.Display(product);
-                //product.DisplayProduct();
-            }
+				ProductPriceHandler.Display(product);
+			}
         }
 
         public IEnumerator<IProductPriceHandler> GetEnumerator()

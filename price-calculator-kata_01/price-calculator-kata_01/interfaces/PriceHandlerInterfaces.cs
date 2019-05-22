@@ -15,6 +15,7 @@ namespace price_calculator_kata_01.interfaces
         decimal DiscountForUpc { get; set; }
         decimal DiscountForUpcResult { get; set; }
         decimal Total { get; set; }
+		AddedExpenses AddedExpenses { get; set; }
         AddedExpensesResults AddedExpensesResults { get; set; }
     }
     public interface ITax
